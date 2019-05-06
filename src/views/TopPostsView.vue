@@ -1,31 +1,29 @@
 <template lang="html">
   <div id="view">
 <TopPostsList :posts ="topPosts"/>
-<PostDetail v-if="selectedPost" :post="selectedPost" />
+<PostMedia v-if="selectedPost" :post="selectedPost" :mediaImage="selectedPostMediaImage" :mediaVideo="selectedPostMediaVideo"/>
   </div>
 </template>
 
 <script>
 
 import TopPostsList from '@/components/TopPostsList'
-import PostDetail from '@/components/PostDetail'
+import PostMedia from '@/components/PostMedia'
 import {eventBus} from '@/main.js'
 
 export default {
   name: 'top-posts',
-  components: {TopPostsList, PostDetail},
+  components: {TopPostsList, PostMedia},
   data (){
     return {
       topPosts: [],
       selectedPost: null,
-      selectedPostMediaFilm: null
+      selectedPostMediaVideo: null,
+      selectedPostMediaImage: null
     }
   },
   methods: {
-    selectedPostMediaCheck () {
-      if (selectedPost.post.media.reddit_video.fallback_url =!null)
-      selectedPost.post.media.reddit_video.fallback_url= this.selectedPostMediaFilm
-    }
+
   },
   mounted (){
     fetch ('https://www.reddit.com/r/freefolk/top.json')
@@ -36,6 +34,18 @@ export default {
     eventBus.$on('post-selected', (post) => {
         this.selectedPost = post;
     })
+  },
+  computed: {
+    selectedPostMediaCheck () {
+      const videoPost = this.selectedPost.is_video
+      const imagePost = this.selectedPost.url
+      if (videoPost == true) {
+        this.selectedPostMediaVideo = videoPost;
+      }
+      else {
+        this.selectedPostMediaImage = imagePost
+      }
+    }
   }
 }
 </script>
