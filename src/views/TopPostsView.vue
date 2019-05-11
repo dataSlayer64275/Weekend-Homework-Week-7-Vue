@@ -23,28 +23,31 @@ export default {
     }
   },
   methods: {
-
+    fetchData(subreddit){
+      
+    }
   },
   mounted (){
-    fetch ('https://www.reddit.com/r/freefolk/top.json')
+    fetch ('https://www.reddit.com/r/quityourbullshit.json')
     .then(response => response.json())
     .then(results => {
       this.topPosts = results.data.children.map(postObj => postObj.data)
     })
     eventBus.$on('post-selected', (post) => {
         this.selectedPost = post;
+        const videoPost = post.is_video
+        const imagePost = post.url
+        if (videoPost == true) {
+          this.selectedPostMediaVideo = videoPost;
+        }
+        else {
+          this.selectedPostMediaImage = imagePost
+        }
     })
   },
   computed: {
     selectedPostMediaCheck () {
-      const videoPost = this.selectedPost.is_video
-      const imagePost = this.selectedPost.url
-      if (videoPost == true) {
-        this.selectedPostMediaVideo = videoPost;
-      }
-      else {
-        this.selectedPostMediaImage = imagePost
-      }
+
     }
   }
 }

@@ -1,6 +1,6 @@
 <template lang="html">
   <div>
-<img v-if="mediaImage"  :src="mediaImage" height="300" width="400">
+<img v-if="mediaImage"  :src="mediaImage" height="500" width="500">
   </div>
 </template>
 

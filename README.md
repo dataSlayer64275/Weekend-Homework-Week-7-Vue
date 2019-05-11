@@ -1,4 +1,4 @@
-# weekend_homework
+# weekend_homework - test
 
 ## Project setup
 ```
